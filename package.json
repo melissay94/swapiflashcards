@@ -1,0 +1,30 @@
+{
+  "name": "swapi_flashcards_game",
+  "version": "1.0.0",
+  "engines": {
+    "node": "7.3.0",
+    "npm": "3.10.10"
+  },
+  "description": "Star Wars API flash card game for class",
+  "main": "./src/main.js",
+  "scripts": {
+    "start": "node ./src/server.js",
+    "pretest": "eslint ./src --fix",
+    "test": "echo \"Tests Completed\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/melissay94/swapiflashcards.git"
+  },
+  "author": "Melissa Young",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/melissay94/swapiflashcards/issues"
+  },
+  "homepage": "https://github.com/melissay94/swapiflashcards#readme",
+  "devDependencies": {
+    "eslint": "^3.17.1",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.2.0"
+  }
+}
