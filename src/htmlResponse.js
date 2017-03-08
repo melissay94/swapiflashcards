@@ -9,6 +9,8 @@ const fs = require('fs');
 */
 const index = fs.readFileSync(`${__dirname}/../client/index.html`);
 const style = fs.readFileSync(`${__dirname}/../client/style.css`);
+const background = fs.readFileSync(`${__dirname}/../client/media/milleniumFalcon.jpg`);
+const title = fs.readFileSync(`${__dirname}/../client/media/title.png`);
 
 // Handles index page request
 const getIndex = (request, response) => {
@@ -24,8 +26,23 @@ const getStyle = (request, response) => {
   response.end();
 };
 
+// Handles image request
+const getBackground = (request, response) => {
+  response.writeHead(200, {'Content-Type': 'image/jpeg'});
+  response.write(background);
+  response.end();
+};
+
+const getTitle = (request, response) => {
+  response.writeHead(200, {'Content-Type': 'image/png'});
+  response.write(title);
+  response.end();
+}
+
 // Exports to set functions to public
 module.exports = {
   getIndex,
   getStyle,
+  getBackground,
+  getTitle,
 };

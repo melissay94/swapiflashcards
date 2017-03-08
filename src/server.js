@@ -18,7 +18,9 @@ const port = process.env.port || process.env.NODE_PORT || 3000;
 const urlStruct = {
   '/': htmlHandler.getIndex, // Gets the home page
   '/style.css': htmlHandler.getStyle, // Gets the styles page
-    notFound: jsonHandler.notFound,
+  '/media/milleniumFalcon.jpg': htmlHandler.getBackground, // Gets the site background
+  '/media/title.png': htmlHandler.getTitle, // Gets the site title
+    notFound: jsonHandler.notFound, // If not found, returns that error
 };
 
 // Handles all our http requests, as always. Except new and improved
