@@ -28,16 +28,16 @@ const getStyle = (request, response) => {
 
 // Handles image request
 const getBackground = (request, response) => {
-  response.writeHead(200, {'Content-Type': 'image/jpeg'});
+  response.writeHead(200, { 'Content-Type': 'image/jpeg' });
   response.write(background);
   response.end();
 };
 
 const getTitle = (request, response) => {
-  response.writeHead(200, {'Content-Type': 'image/png'});
+  response.writeHead(200, { 'Content-Type': 'image/png' });
   response.write(title);
   response.end();
-}
+};
 
 // Exports to set functions to public
 module.exports = {
