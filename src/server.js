@@ -21,14 +21,14 @@ const urlStruct = {
   '/main.js': htmlHandler.getMain, // Gets the client script
   '/media/milleniumFalcon.jpg': htmlHandler.getBackground, // Gets the site background
   '/media/title.png': htmlHandler.getTitle, // Gets the site title
-  '/viewGamers': jsonHandler.getGamers,
-  notFound: jsonHandler.notFound, // If not found, returns that error
+  '/viewGamers': jsonHandler.getGamers, // Gets the list of gamers and scores submitted
+  '/submit': jsonHandler.updateGamers, // Updates the list of gamers
+  notFound: jsonHandler.notFound, // If not found, returns 404
 };
 
 // Handles GET requests
 const getRequest = (request, response, parsedUrl) => {
   // Checks if the path name matches any of the ones in our url object.
-  // If its not there, default to index as always
   if (urlStruct[parsedUrl.pathname]) {
     urlStruct[parsedUrl.pathname](request, response);
   } else {
@@ -65,7 +65,7 @@ const postRequest = (request, response, parsedUrl) => {
             // Parse data into an object
       const bodyParams = query.parse(bodyString);
 
-            // Pass to our updateGamer function
+            // Pass to our updateGamers function
       jsonHandler.updateGamers(request, response, bodyParams);
     });
   }
@@ -80,7 +80,11 @@ const onRequest = (request, response) => {
   const parsedUrl = url.parse(request.url);
 
   // Checks for if its POST vs GET
-  if (request.method === 'POST') { postRequest(request, response, parsedUrl); } else { getRequest(request, response, parsedUrl); }
+  if (request.method === 'POST') {
+    postRequest(request, response, parsedUrl);
+  } else {
+    getRequest(request, response, parsedUrl);
+  }
 };
 
 // Creates a server and lets us know which one it got

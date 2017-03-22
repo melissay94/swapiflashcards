@@ -98,16 +98,16 @@ const updateGamers = (request, response, body) => {
 
 // Sends the 404 status code for not found
 const notFound = (request, response) => {
-  const respondseMsg = {
+  const responseMsg = {
     message: 'This is not the page you are looking for',
     id: 'notFound',
   };
 
-  respondJSON(request, response, 404, respondseMsg);
+  respondJSON(request, response, 404, responseMsg);
 };
 
 // Export all this
-module.export = {
+module.exports = {
   getGamers,
   updateGamers,
   notFound,
