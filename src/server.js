@@ -12,7 +12,7 @@ const htmlHandler = require('./htmlResponse.js');
 const jsonHandler = require('./jsonResponse.js');
 
 // Add port
-const port = process.env.port || process.env.NODE_PORT || 3000;
+const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
 // Looks up url routes with a key:value object to match the request to a function
 const urlStruct = {
