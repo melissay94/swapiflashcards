@@ -9,6 +9,7 @@ const fs = require('fs');
 */
 const index = fs.readFileSync(`${__dirname}/../client/index.html`);
 const style = fs.readFileSync(`${__dirname}/../client/style.css`);
+const main = fs.readFileSync(`${__dirname}/../client/main.js`);
 const background = fs.readFileSync(`${__dirname}/../client/media/milleniumFalcon.jpg`);
 const title = fs.readFileSync(`${__dirname}/../client/media/title.png`);
 
@@ -24,6 +25,13 @@ const getStyle = (request, response) => {
   response.writeHead(200, { 'Content-Type': 'text/css' });
   response.write(style);
   response.end();
+};
+
+// Handles getting main script
+const getMain = (request, response) => {
+    response.writeHead(200, {'Content-Type': 'application/javascript'});
+    response.write(main);
+    response.end();
 };
 
 // Handles image request
@@ -43,6 +51,7 @@ const getTitle = (request, response) => {
 module.exports = {
   getIndex,
   getStyle,
+  getMain,
   getBackground,
   getTitle,
 };
