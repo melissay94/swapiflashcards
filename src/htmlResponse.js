@@ -29,9 +29,9 @@ const getStyle = (request, response) => {
 
 // Handles getting main script
 const getMain = (request, response) => {
-    response.writeHead(200, {'Content-Type': 'application/javascript'});
-    response.write(main);
-    response.end();
+  response.writeHead(200, { 'Content-Type': 'application/javascript' });
+  response.write(main);
+  response.end();
 };
 
 // Handles image request

@@ -11,7 +11,7 @@
         <img src="media/title.png" alt="Star Wars Flash Cards" />
         <h3>Got a test soon? Study this instead!</h3>
         <div id="streak">
-        	<p>Streak: </p>
+        	<p>Streak: <span id="score">0</span></p>
         </div>
 		<div id="card">
 		</div>
@@ -19,5 +19,10 @@
 			<button id="trueBtn">True</button>
 			<button id="falseBtn">False</button>
 		</div>
+        <form id="gamerForm" action="/submit" method="post">
+            <label for="name">Nickname: </label>
+            <input id="nameField" type="text" name="name" />
+            <input type="submit" value="Submit Score" />
+        </form>
     </body>
 </html>

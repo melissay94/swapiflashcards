@@ -4,6 +4,8 @@ var SWAPI_URL = "http://swapi.co/api/";
 var swapi_data = [];
 var request_types = ["films", "people", "planets"];
 
+var currentStreak = 0;
+
 window.onload = init;
 
 // Calls everything that should be called when the page has loaded w/out user interaction
@@ -12,6 +14,11 @@ function init() {
     for (var i = 0; i < 5; i++) {
         getData();
     }
+
+    // Set up for posting gamer name
+    var nameForm = document.querySelector('#gamerForm');
+    var sendUser = sendPost(e, nameForm);
+    nameForm.addEventListener('submit', sendUser);
 }
 
 // Calls the api to get dat data
@@ -51,6 +58,43 @@ function loadData(obj){
     console.log(obj);
 }
 
+// Will format recieved obj into a question to appear on the flash card
 function formatQuestion(data) {
     console.log(data);
+}
+
+// Sends post request to add or update a gamer's score
+function sendPost(e, nameForm) {
+
+    // Grabs actions from the forms
+    const nameAction = nameForm.getAttribute('action');
+    const nameMethod = nameForm.getAttribute('method');
+
+    // Our form will only have the gamer's name, they don't submit their score
+    const nameField = nameForm.querySelector('#name');
+
+    // Create an AJAX request
+    const xhr = new XMLHttpRequest();
+
+    // Set the method and action
+    xhr.open(nameMethod, nameAction);
+
+    // Set the request type 
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+    // Set the request type for a JSON response
+    xhr.setRequestHeader('Accept', 'application/json');
+
+    // Build our request format, the same as a query string
+    const formData = `name=${nameField.value}&score={currentStreak}`;
+
+    // Send our request
+    xhr.send(formData);
+
+    // Prevent default actgion
+    e.preventDefault();
+
+    // Return false to keep browser from changing the page
+    return false;
+    
 }
