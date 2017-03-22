@@ -1,0 +1,21 @@
+What my site does: 
+	The purpose of this site is to be a fun little study break for star wars fans. Here they can do star wars flash cards on facts from the main 7 movies and try to get the highest continuous streak possible to be submitted. 
+
+API:
+	The API handles the gamer names and keeping track of their scores
+
+What went right:
+	The site looks pretty nice and I was able to get my Star Wars information from the Star Wars API which is pretty cool. 
+	You can submit your name to the server API.
+
+What went wrong:
+	I didn't properly manage my time and there's a few bugs that I could fix with time, but weren't able to get right now. They include:
+		- The page still changes when you hit submit for your gamer name
+		- All the flash cards are true because I didn't make a way to create false cards yet. 
+		- The questions are kind of meh because a lot of the info returned by the object was more URLs from the API and I wasn't sure how to get that data.
+
+If (When) I continue:
+	I would want to fix all the things listed above as well as improve the design of the site. I would also like to have questions that are about different categories besides characters in the movies. I would also like to make a leaderboard for all players to see against each other. 
+
+Above and Beyond:
+	I used another API to get my data as well as make the Server API. 

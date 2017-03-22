@@ -30,6 +30,35 @@ h3 {
 	border-radius: 20px;
 }
 
+#card p{
+	margin-top: 30px;
+	font-size: 35px;
+	padding:20px;
+}
+
+#card h4 {
+	font-size: 40px;
+}
+
+#gamerInfo{
+	background: #c9c9c9;
+	border-radius: 20px;
+	margin-top: 10px;
+	padding: 10px;
+	width:700px;
+	margin: 0 auto;
+	font-weight: bold;
+}
+
+#gamerInfo input[type="submit" i] {
+	background-color: #183159;
+	color: #ffbf00; 
+	padding: 10px 30px 10px 30px;
+	margin: 10px;
+	font-weight: bold;
+	border: none;
+}
+
 button {
 	background-color: #183159;
 	color: #ffbf00; 

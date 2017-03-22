@@ -61,6 +61,8 @@ function loadData(obj){
     question += "<h4>Is it " + name + "?</h4>";
 
     document.querySelector("#card").innerHTML = question;
+    $("#card").fadeIn(500);
+    return;
 }
 
 // Sends post request to add or update a gamer's score
