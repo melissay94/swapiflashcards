@@ -22,7 +22,6 @@ const urlStruct = {
   '/media/milleniumFalcon.jpg': htmlHandler.getBackground, // Gets the site background
   '/media/title.png': htmlHandler.getTitle, // Gets the site title
   '/viewGamers': jsonHandler.getGamers, // Gets the list of gamers and scores submitted
-  '/submit': jsonHandler.updateGamers, // Updates the list of gamers
   notFound: jsonHandler.notFound, // If not found, returns 404
 };
 
