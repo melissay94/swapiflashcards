@@ -2,7 +2,6 @@
 *  As users get different streaks, they will update their current name
 *  Or they can add a new name to their board
 */
-
 const gamers = {};
 
 // Using the cryptography module for basic security with our etag
@@ -15,8 +14,12 @@ const digest = etag.digest('hex');
 
 // Responds with a JSON object based on status code
 const respondJSON = (request, response, status, object) => {
-  // Set up the headers
+  // Set up the headers with CORS support --> Hooray CORS
   const headers = {
+    'access-control-allow-origin': '*', // Page urls allowed to access CORS
+    'access-control-allow-methods': 'GET, POST, PUT, DELETE, OPTIONS', // HTTP methods allowed to run
+    'access-control-allow-headers': 'Content-type, accept', // Headers to accept the client
+    'access-control-max-age': 10, // Number of seconds to allow each request to come in
     'Content-Type': 'application/JSON',
     etag: digest,
   };
@@ -31,6 +34,10 @@ const respondJSON = (request, response, status, object) => {
 const respondJSONMeta = (request, response, status) => {
   // Set up the headers
   const headers = {
+    'access-control-allow-origin': '*', // Page urls allowed to access CORS
+    'access-control-allow-methods': 'GET, POST, PUT, DELETE, OPTIONS', // HTTP methods allowed to run
+    'access-control-allow-headers': 'Content-type, accept', // Headers to accept the client
+    'access-control-max-age': 10, // Number of seconds to allow each request to come in
     'Content-Type': 'application/json',
     etag: digest,
   };
