@@ -6,7 +6,7 @@ body {
   	right: 0;
   	bottom: 0;
   	position: absolute;
-	background-image: url('/media/milleniumFalcon.jpg');
+	background-image: url('../assets/media/milleniumFalcon.jpg');
 	background-size: cover;
 	background-position: center center;
 	background-attachment: fixed;
@@ -23,22 +23,51 @@ h3 {
 }
 
 #card {
-	height: 300px;
-	width: 700px;
 	margin: 0 auto;
+}
+
+.flip-container {
+	perspective: 1000px;
+	-webkit-perspective: 1000px;
+
+}
+
+.flip-container.flip .flipper {
+	transform: rotateY(180deg);
+}
+
+.flip-container, .front, .back {
+	width: 700px;
+	height: 300px;
+}
+
+.flipper {
+	transition: 0.6s;
+	transform-style: preserve-3d;
+	position: relative;
+}
+
+.front, .back {
+	backface-visibility: hidden;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.front {
+	z-index: 2;
 	background-color: #c9c9c9;
 	border-radius: 20px;
+	transform: rotateY(0deg);
 }
 
-#card p{
-	margin-top: 30px;
-	font-size: 35px;
-	padding:20px;
+.back {
+	background-color: #c9c9c9;
+	border-radius: 20px;
+	transform: rotateY(180deg);
 }
 
-#card h4 {
-	font-size: 40px;
-}
+
 
 #gamerInfo{
 	background: #c9c9c9;

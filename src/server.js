@@ -1,92 +1,57 @@
-// http module
-const http = require('http');
+// Require packages
+const path = require('path');
+const express = require('express');
+const expressHandlebars = require('express-handlebars');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const favicon = require('serve-favicon');
+const cors = require('cors');
 
-// url module
-const url = require('url');
+// Require route folder
+const router = require('./router.js');
 
-// string module
-const query = require('querystring');
+const port = process.env.PORT || 3000;
 
-// project files
-const htmlHandler = require('./htmlResponse.js');
-const jsonHandler = require('./jsonResponse.js');
+const mongoURL = process.env.MONGODB || 'mongob://localhost/swapi';
 
-// Add port
-const port = process.env.PORT || process.env.NODE_PORT || 3000;
-
-// Looks up url routes with a key:value object to match the request to a function
-const urlStruct = {
-  '/': htmlHandler.getIndex, // Gets the home page
-  '/style.css': htmlHandler.getStyle, // Gets the styles page
-  '/main.js': htmlHandler.getMain, // Gets the client script
-  '/media/milleniumFalcon.jpg': htmlHandler.getBackground, // Gets the site background
-  '/media/title.png': htmlHandler.getTitle, // Gets the site title
-  '/viewGamers': jsonHandler.getGamers, // Gets the list of gamers and scores submitted
-  notFound: jsonHandler.notFound, // If not found, returns 404
-};
-
-// Handles GET requests
-const getRequest = (request, response, parsedUrl) => {
-  // Checks if the path name matches any of the ones in our url object.
-  if (urlStruct[parsedUrl.pathname]) {
-    urlStruct[parsedUrl.pathname](request, response);
-  } else {
-    urlStruct.notFound(request, response);
+// Set up mongoose
+mongoose.Promise = global.Promise;
+mongoose.connect(mongoURL, (err) => {
+  if (err) {
+    console.log('Error connecting to database');
+    throw err;
   }
-};
+});
 
-// Handles POST requests
-const postRequest = (request, response, parsedUrl) => {
-    // So we want to submit to the url
-  if (parsedUrl.pathname === '/submit') {
-    const pathResponse = response;
+// Define express app
+const app = express();
 
-        // uploads come in as a byte stream to be reassembled
-    const body = [];
+// Use cors cause this doesn't have anything sensative
+app.use(cors());
 
-        // Send a bad request if it errors out
-    request.on('error', (err) => {
-      console.log(err);
-      pathResponse.statusCode = 400;
-      pathResponse.end();
-    });
+// Set up route for the assets folder ie images
+app.use('/assets', express.static(path.resolve(`${__dirname}/../client`)));
 
-        // Add each byte of data as it comes in
-    request.on('data', (chunk) => {
-      body.push(chunk);
-    });
+// Parse POST requests as application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
 
-        // End of the upload stream
-    request.on('end', () => {
-            // Combine array and convert to a string
-      const bodyString = Buffer.concat(body).toString();
+// Parse for JSON too
+app.use(bodyParser.json());
 
-            // Parse data into an object
-      const bodyParams = query.parse(bodyString);
+// Set up views for handlebars
+app.engine('handlebars', expressHandlebars());
+app.set('view engine', 'handlebars');
 
-            // Pass to our updateGamers function
-      jsonHandler.updateGamers(request, response, bodyParams);
-    });
-  }
-};
+// Set template director
+app.set('views', `${__dirname}/../client/view`);
 
-// Handles all our http requests, as always. Except new and improved
-const onRequest = (request, response) => {
-    // Because I like knowing
-  console.log(request.url);
+// Set up favicon path
+app.use(favicon(`${__dirname}/../client/media/lightsaber.png`));
 
-    // Parse the url passed in so we can grab any section of it
-  const parsedUrl = url.parse(request.url);
+// Pass app to router to map route
+router(app);
 
-  // Checks for if its POST vs GET
-  if (request.method === 'POST') {
-    postRequest(request, response, parsedUrl);
-  } else {
-    getRequest(request, response, parsedUrl);
-  }
-};
-
-// Creates a server and lets us know which one it got
-http.createServer(onRequest).listen(port);
-
-console.log(`Listening on 127.0.0.1: ${port}`);
+// Connect to port
+app.listen(port, () => {
+  console.log(`Listening on ${port}`);
+});

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>Star Wars Flash Cards</title>
+		<meta charset="tf-8" />
+		<link rel="stylesheet" href="assets/style.css" type="text/css" />
+		<script type="text/javascript" src="assets/main.js"></script>
+	</head>
+	<body>
+		<img src="assets/media/title.png" alt="Star Wars Flash Cards" />
+		<h3>Got a test soon? Study this instead!</h3>
+		<div id="card" class="flip-container">
+			<div class="flipper">
+				<div class="front">
+					<h2>Hello</h2>
+				</div>
+				<div class="back">
+					<h2>Goodbye</h2>
+					<button id="nextBtn">Next</button>
+				</div>
+			</div>
+		</div>
+		<div id="buttons">
+			<button id="trueBtn">True</button>
+			<button id="falseBtn">False</button>
+		</div>
+        <div id="gamerInfo">
+            <div id="streak">
+                <p>Streak: <span id="score">0</span></p>
+            </div>
+            <form id="gamerForm" action="/submit" method="post">
+                <label for="name">Nickname: </label>
+                <input id="nameField" type="text" name="name" />
+                <input type="submit" value="Submit Score" />
+            </form>
+        </div>
+	</body>
+</html>

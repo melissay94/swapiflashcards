@@ -3,14 +3,13 @@
 var SWAPI_URL = "http://swapi.co/api/";
 
 var currentStreak = 0;
+var answerSide = false;
 var filmData;
 
 window.onload = init;
 
 // Calls everything that should be called when the page has loaded w/out user interaction
 function init() {
-    // Initialize the data 
-    getData();
 
     // Set up for posting gamer name
     var nameForm = document.querySelector('#gamerForm');
@@ -20,14 +19,20 @@ function init() {
     // Set up true false buttons
     var streak = document.querySelector("#score");
     document.querySelector("#trueBtn").onclick = function() {
-        currentStreak += 1;
-        streak.innerHTML = currentStreak;
-        getData();
+        if (!answerSide) {
+            document.querySelector("#card").classList.toggle("flip");
+            answerSide = !answerSide;
+        }
     };
     document.querySelector("#falseBtn").onclick = function() {
-        currentStreak = 0;
-        streak.innerHTML = currentStreak;
-        getData();
+        if (!answerSide) {
+            document.querySelector("#card").classList.toggle("flip");
+            answerSide = !answerSide;
+        }
+    }
+    document.querySelector("#nextBtn").onclick = function() {
+        document.querySelector("#card").classList.toggle("flip");
+        answerSide = !answerSide;
     }
 }
 
