@@ -67,8 +67,6 @@ h3 {
 	transform: rotateY(180deg);
 }
 
-
-
 #gamerInfo{
 	background: #c9c9c9;
 	border-radius: 20px;
@@ -88,6 +86,28 @@ h3 {
 	border: none;
 }
 
+#gamerInfo input[type="submit" i]:hover {
+	background-color: #072048;
+	color: #eeae00;
+	padding: 10px 30px 10px 30px;
+	margin: 10px;
+	font-weight: bold;
+	border: none;
+}
+
+#scoreboard ul {
+	list-style: none;
+	padding: 0px;
+
+}
+#scoreboard li {
+	background-color: white;
+	border-radius: 5px;
+}
+#scoreboard h4 {
+	padding: 10px;
+}
+
 button {
 	background-color: #183159;
 	color: #ffbf00; 
@@ -95,4 +115,13 @@ button {
 	margin: 10px;
 	font-weight: bold;
 	border: none;
+}
+
+button:hover {
+	background-color: #072048;
+	color: #eeae00;
+}
+
+button:focus {
+	outline: none;
 }

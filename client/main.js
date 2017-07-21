@@ -11,29 +11,50 @@ window.onload = init;
 // Calls everything that should be called when the page has loaded w/out user interaction
 function init() {
 
-    // Set up for posting gamer name
-    var nameForm = document.querySelector('#gamerForm');
-    var sendUser = (e) => sendPost(e, nameForm);
-    nameForm.addEventListener('submit', sendUser);
+    // Get all gamers and scores to populate scoreboard
+    sendAjax('GET', '/gamers', null, (data) => {
+        displayData(data);
+    });
 
-    // Set up true false buttons
-    var streak = document.querySelector("#score");
+    // Set up flipping of the cards based on which side it i
     document.querySelector("#trueBtn").onclick = function() {
-        if (!answerSide) {
-            document.querySelector("#card").classList.toggle("flip");
-            answerSide = !answerSide;
-        }
+        if (!answerSide) { flip(); }
     };
     document.querySelector("#falseBtn").onclick = function() {
-        if (!answerSide) {
-            document.querySelector("#card").classList.toggle("flip");
-            answerSide = !answerSide;
-        }
+        if (!answerSide) { flip(); }
+    };
+    document.querySelector("#nextBtn").onclick = function() { flip(); };
+
+    // Add submit event listener for form
+    document.querySelector("#gamerForm").addEventListener('submit', sendGamer);
+}
+
+// Handles the actual flipping of the card by adding the flip cards
+function flip() {
+    document.querySelector("#card").classList.toggle("flip");
+    answerSide = !answerSide;
+
+}
+
+function displayData(data) {
+
+    // Empty string to add list of scores to
+    var html = "";
+
+    var length = data.length < 10 ? data.length : 10;
+
+    html += "<ul id='scoreList' >";
+
+    for (var i = 0; i < length; i++) {
+        var score = data[i];
+
+        html +="<li><h4> Studier " + score.gamerTag;
+        html +=  ": Streak: " + score.score + "</h4></li>";
     }
-    document.querySelector("#nextBtn").onclick = function() {
-        document.querySelector("#card").classList.toggle("flip");
-        answerSide = !answerSide;
-    }
+
+    html += "</ul>";
+    document.querySelector('#scoreboard').innerHTML = html;
+
 }
 
 // Calls the api to get dat data
@@ -70,37 +91,41 @@ function loadData(obj){
     return;
 }
 
+// Sends ajax calls
+const sendAjax = (type, action, data, success) => {
+    $.ajax({
+        cache: false,
+        type: type,
+        url: action,
+        data: data,
+        dataType: 'json',
+        success: success,
+        error: function(xhr, status, error) {
+            var msgObj = JSON.parse(xhr.responseText);
+            console.log(msgObj);
+        }
+
+    })
+}
+
 // Sends post request to add or update a gamer's score
-function sendPost(e, nameForm) {
-
-    // Grabs actions from the forms
-    const nameAction = nameForm.getAttribute('action');
-    const nameMethod = nameForm.getAttribute('method');
-
-    // Our form will only have the gamer's name, they don't submit their score
-    const nameField = nameForm.querySelector('#name');
-
-    // Create an AJAX request
-    const xhr = new XMLHttpRequest();
-
-    // Set the method and action
-    xhr.open(nameMethod, nameAction);
-
-    // Set the request type 
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-    // Set the request type for a JSON response
-    xhr.setRequestHeader('Accept', 'application/json');
-
-    // Build our request format, the same as a query string
-    const formData = `name=${nameField.value}&score={currentStreak}`;
-    console.log(formData, " name: ", nameField.value, " streak: ", currentStreak);
-
-    // Send our request
-    xhr.send(formData);
+function sendGamer(e) {
 
     // Prevent default action
     e.preventDefault();
+
+    const name = document.querySelector("#nameField");
+    const score = document.querySelector("#score").innerHTML;
+
+    if (!name.value || score < 0) {
+        return false;
+    }
+
+    var gamerData = JSON.stringify({ "gamerTag": name.value, "score": parseInt(score) });
+    gamerData = JSON.parse(gamerData);
+
+    sendAjax('POST', '/gamers', gamerData);
+
 
     // Return false to keep browser from changing the page
     return false;

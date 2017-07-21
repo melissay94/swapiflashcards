@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 
 // Declare schema
 const Schema = mongoose.Schema;
-let ScoreModel = {};
 
 // Set up schema
 const ScoreSchema = new Schema({
@@ -12,7 +11,6 @@ const ScoreSchema = new Schema({
     type: String,
     required: true,
     trim: true,
-    unique: true,
     match: /^[A-Za-z0-9_\-.]{1,24}$/,
   },
   score: {
@@ -25,7 +23,5 @@ const ScoreSchema = new Schema({
   },
 });
 
-ScoreModel = mongoose.model('Score', ScoreModel);
+module.exports = mongoose.model('Score', ScoreSchema);
 
-module.exports.ScoreModel = ScoreModel;
-module.exports.ScoreSchema = ScoreSchema;

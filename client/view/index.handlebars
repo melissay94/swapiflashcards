@@ -4,6 +4,7 @@
 		<title>Star Wars Flash Cards</title>
 		<meta charset="tf-8" />
 		<link rel="stylesheet" href="assets/style.css" type="text/css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 		<script type="text/javascript" src="assets/main.js"></script>
 	</head>
 	<body>
@@ -28,11 +29,13 @@
             <div id="streak">
                 <p>Streak: <span id="score">0</span></p>
             </div>
-            <form id="gamerForm" action="/submit" method="post">
+            <form id="gamerForm" action="/gamers" method="POST">
                 <label for="name">Nickname: </label>
                 <input id="nameField" type="text" name="name" />
                 <input type="submit" value="Submit Score" />
             </form>
+          	<h2>High Scores</h2>
+            <div id="scoreboard"></div>
         </div>
 	</body>
 </html>

@@ -12,7 +12,7 @@ const router = require('./router.js');
 
 const port = process.env.PORT || 3000;
 
-const mongoURL = process.env.MONGODB || 'mongob://localhost/swapi';
+const mongoURL = process.env.MONGODB_URI || 'mongodb://localhost/Swapi';
 
 // Set up mongoose
 mongoose.Promise = global.Promise;
