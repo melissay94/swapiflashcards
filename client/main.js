@@ -25,6 +25,8 @@ function init() {
             var answer = "<h4>You got it!</h4>";
             document.querySelector("#response").innerHTML = answer;
             currentStreak++;
+            // Update current streak
+            document.querySelector("#score").innerHTML = currentStreak;
         }
     };
     document.querySelector("#falseBtn").onclick = function() {
@@ -32,16 +34,19 @@ function init() {
             flip();
             var answer = "<h4>Nope! Try again.</h4>";
             document.querySelector("#response").innerHTML = answer;
+            document.querySelector("#gamerForm").style = "display:block";
             currentStreak = 0;
         }
     };
     document.querySelector("#nextBtn").onclick = function() {
         getData();
         flip();
+        document.querySelector("#gamerForm").style = "display:none";
     };
 
     // Add submit event listener for form
     document.querySelector("#gamerForm").addEventListener('submit', sendGamer);
+
 }
 
 // Handles the actual flipping of the card by adding the flip cards
@@ -51,6 +56,7 @@ function flip() {
 
 }
 
+// Display data from our gamer api
 function displayData(data) {
 
     // Empty string to add list of scores to
@@ -93,11 +99,29 @@ function loadData(obj){
     
     var name = obj.name;
     var gender = obj.gender;
+    var question;
+
+    if (gender === 'female'  || gender === 'male' ) {
+        gender = obj.gender;
+        question = "<p>This character is " + gender + " and has ";
+    }
+    else
+        question = "<p>This character has ";
+
+
     var eyeColor = obj.eye_color;
+    question += eyeColor + " eyes.</p>"
+    var episodes = ['A New Hope', 'The Empire Strikes Back', 'Return of the Jedi', 'The Phantom Menance', 'Attack of the Clones', 'Revenge of the Sith', 'The Force Awakens'];
 
-    var question = "<p>This character is " + gender + " and has " + eyeColor + " eyes.</p>";
-    question += "<h4>Is it " + name + "?</h4>";
+;
+    question += "<p>They appeared in </p><ul>"
 
+    for (var i = 0; i < obj.films.length; i++) {
+        var film = obj.films[i].slice(obj.films[i].length-2, obj.films[i].length-1);
+        question += "<li>" + episodes[parseInt(film) - 1] + " </li>";
+    }
+
+    question += "</ul><h4>Is it " + name + "?</h4>";
     document.querySelector(".front").innerHTML = question;
     return;
 }
@@ -137,6 +161,16 @@ function sendGamer(e) {
 
     sendAjax('POST', '/gamers', gamerData);
 
+    // Get all gamers and scores to populate scoreboard
+    sendAjax('GET', '/gamers', null, (data) => {
+        displayData(data);
+    });
+
+    document.querySelector("#nameField").value = '';
+
+        getData();
+        flip();
+        document.querySelector("#gamerForm").style = "display:none";
 
     // Return false to keep browser from changing the page
     return false;
