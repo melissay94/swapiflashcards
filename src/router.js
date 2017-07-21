@@ -8,7 +8,6 @@ const router = (app) => {
   app.route('/gamers')
   .get(controller.getAllGamers)
   .post(controller.createAGamer);
-};
 
 // Export the router
 module.exports = router;

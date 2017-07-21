@@ -16,14 +16,29 @@ function init() {
         displayData(data);
     });
 
+    getData();
+
     // Set up flipping of the cards based on which side it i
     document.querySelector("#trueBtn").onclick = function() {
-        if (!answerSide) { flip(); }
+        if (!answerSide) {
+            flip();
+            var answer = "<h4>You got it!</h4>";
+            document.querySelector("#response").innerHTML = answer;
+            currentStreak++;
+        }
     };
     document.querySelector("#falseBtn").onclick = function() {
-        if (!answerSide) { flip(); }
+        if (!answerSide) {
+            flip();
+            var answer = "<h4>Nope! Try again.</h4>";
+            document.querySelector("#response").innerHTML = answer;
+            currentStreak = 0;
+        }
     };
-    document.querySelector("#nextBtn").onclick = function() { flip(); };
+    document.querySelector("#nextBtn").onclick = function() {
+        getData();
+        flip();
+    };
 
     // Add submit event listener for form
     document.querySelector("#gamerForm").addEventListener('submit', sendGamer);
@@ -66,13 +81,10 @@ function getData(){
     // Put the whole url together
     var url = SWAPI_URL + "people/" + pageNum;
 
-    // And finally we make our request
-    $.ajax({
-        dataType: "json",
-        url: url,
-        data: null,
-        success: loadData
+    sendAjax('GET', url, null, (data) => {
+        loadData(data);
     });
+
 }
 
 
@@ -86,8 +98,7 @@ function loadData(obj){
     var question = "<p>This character is " + gender + " and has " + eyeColor + " eyes.</p>";
     question += "<h4>Is it " + name + "?</h4>";
 
-    document.querySelector("#card").innerHTML = question;
-    $("#card").fadeIn(500);
+    document.querySelector(".front").innerHTML = question;
     return;
 }
 
